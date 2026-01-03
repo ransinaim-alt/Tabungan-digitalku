@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Tabungan Digital</title>
+<style>
+    body {
+        margin: 0;
+        font-family: 'Segoe UI', sans-serif;
+        background: linear-gradient(135deg, #ffb6c1, #ffc0cb);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    .card {
+        background: white;
+        width: 320px;
+        padding: 25px;
+        border-radius: 20px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        text-align: center;
+    }
+
+    h1 {
+        color: #ff69b4;
+        margin-bottom: 10px;
+    }
+
+    .saldo {
+        font-size: 26px;
+        margin: 15px 0;
+        color: #e75480;
+        font-weight: bold;
+    }
+
+    input {
+        width: 90%;
+        padding: 10px;
+        border-radius: 10px;
+        border: 1px solid #ffb6c1;
+        margin-bottom: 10px;
+        font-size: 16px;
+        outline: none;
+    }
+
+    button {
+        width: 45%;
+        padding: 10px;
+        border: none;
+        border-radius: 10px;
+        background: #ff69b4;
+        color: white;
+        font-size: 15px;
+        cursor: pointer;
+        margin: 5px;
+        transition: 0.3s;
+    }
+
+    button:hover {
+        background: #ff1493;
+    }
+
+    footer {
+        margin-top: 10px;
+        font-size: 12px;
+        color: gray;
+    }
+</style>
+</head>
+<body>
+
+<div class="card">
+    <h1>Tabungan Digitalku</h1>
+    
+
+    <div class="saldo">
+        Rp <span id="saldo">0</span>
+    </div>
+
+    <input type="number" id="jumlah" placeholder="Masukkan jumlah">
+
+    <div>
+        <button onclick="tambah()">Tambah</button>
+        <button onclick="tarik()">Tarik</button>
+    </div>
+
+    <footer>
+        🌸 Menabung itu bagus 🌸
+    </footer>
+</div>
+
+<script>
+    let saldo = localStorage.getItem("saldoPink")
+        ? parseInt(localStorage.getItem("saldoPink"))
+        : 0;
+
+    document.getElementById("saldo").innerText = saldo;
+
+    function tambah() {
+        let jumlah = parseInt(document.getElementById("jumlah").value);
+        if (isNaN(jumlah) || jumlah <= 0) {
+            alert("Masukkan jumlah yang valid");
+            return;
+        }
+        saldo += jumlah;
+        simpan();
+    }
+
+    function tarik() {
+        let jumlah = parseInt(document.getElementById("jumlah").value);
+        if (isNaN(jumlah) || jumlah <= 0) {
+            alert("Masukkan jumlah yang valid");
+            return;
+        }
+        if (jumlah > saldo) {
+            alert("Saldo tidak cukup");
+            return;
+        }
+        saldo -= jumlah;
+        simpan();
+    }
+
+    function simpan() {
+        localStorage.setItem("saldoPink", saldo);
+        document.getElementById("saldo").innerText = saldo;
+        document.getElementById("jumlah").value = "";
+    }
+</script>
+
+</body>
+</html>
